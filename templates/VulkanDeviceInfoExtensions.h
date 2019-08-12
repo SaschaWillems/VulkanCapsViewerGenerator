@@ -57,7 +57,7 @@ private:
         properties2.push_back(Property2(name, QVariant(value), extension));
     };
     template<typename T>
-    void arrayToQVariantList(T array, size_t size) {
+    QVariantList arrayToQVariantList(T array, size_t size) {
         QVariantList res;
         for (size_t i = 0; i < size; i++) {
             res.push_back(QVariant(array[i]));            
