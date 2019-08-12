@@ -154,8 +154,7 @@
                 }
                 $name = (string)$member->name;
                 if ($type == "VkExtent2D") {
-                    $res .= "\t\tpushProperty2(extension, \"$type.width\", QString::number(extProps.$name.width));\n";
-                    $res .= "\t\tpushProperty2(extension, \"$type.height\", QString::number(extProps.$name.height));\n";
+                    $res .= "\t\tpushProperty2(extension, \"$name\", QVariant::fromValue(QVariantList({ extProps.$name.width, extProps.$name.height })));\n";
                     continue;
                 }
                 // Properties may can be arrays
