@@ -153,6 +153,7 @@
                     continue;
                 }
                 $name = (string)$member->name;
+                $vktype = (string)$member->type;
                 if ($type == "VkExtent2D") {
                     $res .= "\t\tpushProperty2(extension, \"$name\", QVariant::fromValue(QVariantList({ extProps.$name.width, extProps.$name.height })));\n";
                     continue;
@@ -184,7 +185,14 @@
                     }
                 }
                 if ($dim == 0) {
-                    $res .= "\t\tpushProperty2(extension, \"$name\", QVariant(extProps.$name));\n";
+                    switch($vktype) {
+                        case 'VkBool32':
+                            $qtype = "QVariant(bool(extProps.$name))";
+                            break;
+                        default:
+                            $qtype = "QVariant(extProps.$name)";
+                    }
+                    $res .= "\t\tpushProperty2(extension, \"$name\", $qtype);\n";
                 } else {
                     $vars = [];
                     for ($i = 0; $i < $dim; $i++) {
