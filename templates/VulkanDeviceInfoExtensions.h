@@ -2,6 +2,7 @@
 * Vulkan hardware capability viewer
 *
 * THIS HEADER IS AUTO-GENERATED, DO NOT CHANGE
+* See https://github.com/SaschaWillems/VulkanCapsViewerGenerator for the generator
 *
 * Copyright (C) by Sascha Willems (www.saschawillems.de)
 *
@@ -69,6 +70,7 @@ private:
     bool extensionSupported(const char* extensionName);
 {{header_functions}}
 public:
+    const uint32_t vkHeaderVersion = {{VK_HEADER_VERSION}};
     std::vector<Feature2> features2;
     std::vector<Property2> properties2;
     std::vector<VkExtensionProperties> extensions;

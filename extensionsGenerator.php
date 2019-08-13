@@ -117,6 +117,11 @@
     class CppBuilder {
 
         private $header_functions = [];
+        private $vk_header_version = null;
+        
+        function __construct($vk_header_version) {
+            $this->vk_header_version = $vk_header_version;
+        }
 
         public function generateFeatures2CodeBlock($extension) {
             $sType = TypeContainer::getsType($extension->features2);             
@@ -224,6 +229,7 @@
                 $header_replace .= "    void $header_func();\n";
             }
             $header_source = str_replace('{{header_functions}}', $header_replace, $header_source);
+            $header_source = str_replace('{{VK_HEADER_VERSION}}', $this->vk_header_version, $header_source);
             file_put_contents("$output_dir/VulkanDeviceInfoExtensions.h", $header_source);
         }
 
@@ -288,7 +294,7 @@
 
     $xml = simplexml_load_file("Vulkan-Docs/xml/vk.xml") or exit("Could not read vk.xml");
     $header_version_node = $xml->xpath("./types/type/name[.='VK_HEADER_VERSION']/..");
-    $vk_version = filter_var($header_version_node[0], FILTER_SANITIZE_NUMBER_INT);
+    $vk_header_version = filter_var($header_version_node[0], FILTER_SANITIZE_NUMBER_INT);
 
     $output_dir = "out";
     // $output_dir = "V:/Vulkan/VulkanCapsViewer/";
@@ -296,7 +302,7 @@
         mkdir($output_dir);
     }
     
-    echo "Generating C++ files for header version $vk_version...\n";
+    echo "Generating C++ files for header version $vk_header_version...\n";
 
     $type_container = new TypeContainer($xml);
     $extension_container = new ExtensionContainer($xml, $type_container);
@@ -311,7 +317,7 @@
     sort($ext_groups);
     
     // Generate CPP Code
-    $cpp_builder = new CppBuilder();
+    $cpp_builder = new CppBuilder($vk_header_version);
     foreach ($ext_groups as $ext_group) {
         // Features2
         $ext_arr = array_filter($extension_container->extensions, function ($ext) use ($ext_group) { return ($ext->group == $ext_group && $ext->features2); });

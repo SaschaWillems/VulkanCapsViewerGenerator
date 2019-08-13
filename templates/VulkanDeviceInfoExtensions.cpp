@@ -2,6 +2,7 @@
 * Vulkan hardware capability viewer
 *
 * THIS HEADER IS AUTO-GENERATED, DO NOT CHANGE
+* See https://github.com/SaschaWillems/VulkanCapsViewerGenerator for the generator
 *
 * Copyright (C) by Sascha Willems (www.saschawillems.de)
 *
