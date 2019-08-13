@@ -27,6 +27,7 @@
 
 #include "vulkan/vulkan.h"
 #include "vulkanpfn.h"
+#include "vulkanresources.h"
 
 #ifdef __ANDROID__
 #include <sys/system_properties.h>

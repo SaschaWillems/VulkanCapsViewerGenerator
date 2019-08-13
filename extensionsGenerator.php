@@ -189,7 +189,10 @@
                         case 'VkBool32':
                             $qtype = "QVariant(bool(extProps.$name))";
                             break;
-                        default:
+                        case 'VkConformanceVersionKHR':
+                            $qtype = "QString::fromStdString(vulkanResources::conformanceVersionKHRString(extProps.$name))";
+                            break;
+                        default:                
                             $qtype = "QVariant(extProps.$name)";
                     }
                     $res .= "\t\tpushProperty2(extension, \"$name\", $qtype);\n";
