@@ -333,4 +333,19 @@
     $cpp_builder->writeHeader("$output_dir/VulkanDeviceInfoExtensions.h", $output_dir);
     $cpp_builder->writeImplementation("$output_dir/VulkanDeviceInfoExtensions.cpp", $output_dir, $extension_container); 
 
+    // Output extension list for changelog
+    $extenstion_list_file = $output_dir."/extensionlist.txt";
+    if (file_exists($extenstion_list_file)) {
+        unlink($extenstion_list_file);
+    }
+    foreach ($ext_groups as $ext_group) {        
+        $ext_arr = array_filter($extension_container->extensions, function ($ext) use ($ext_group) { return ($ext->group == $ext_group && ($ext->features2 || $ext->properties2)); });
+        if (count($ext_arr) > 0) {
+            file_put_contents($extenstion_list_file, "$ext_group\n", FILE_APPEND);
+            foreach ($ext_arr as $ext) {
+                file_put_contents($extenstion_list_file, "$ext->name\n", FILE_APPEND);
+            }
+        }
+    }
+
     echo "C++ files written to \"/out\"";
