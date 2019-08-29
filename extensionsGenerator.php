@@ -197,6 +197,10 @@
                         case 'VkConformanceVersionKHR':
                             $qtype = "QString::fromStdString(vulkanResources::conformanceVersionKHRString(extProps.$name))";
                             break;
+                        case 'VkDeviceSize':
+                        case 'uint64_t':
+                            $qtype = "QVariant::fromValue(extProps.$name)";
+                            break;
                         default:                
                             $qtype = "QVariant(extProps.$name)";
                     }
