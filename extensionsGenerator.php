@@ -127,7 +127,8 @@
             $sType = TypeContainer::getsType($extension->features2);             
             $res = "\tif (extensionSupported(\"{$extension->name}\")) {\n";
             $res .= "\t\tconst char* extension(\"{$extension->name}\");\n";
-            $res .= "\t\t{$extension->features2['name']} extFeatures { $sType };\n";
+            $res .= "\t\t{$extension->features2['name']} extFeatures {};\n";
+            $res .= "\t\textFeatures.sType = $sType;\n";
             $res .= "\t\tVkPhysicalDeviceFeatures2 deviceFeatures2(initDeviceFeatures2(&extFeatures));\n";
             $res .= "\t\tpfnGetPhysicalDeviceFeatures2KHR(device, &deviceFeatures2);\n";    
             foreach ($extension->features2->member as $member) {
@@ -147,7 +148,8 @@
             $sType = TypeContainer::getsType($extension->properties2);
             $res = "\tif (extensionSupported(\"{$extension->name}\")) {\n";
             $res .= "\t\tconst char* extension(\"{$extension->name}\");\n";
-            $res .= "\t\t{$extension->properties2['name']} extProps { $sType };\n";
+            $res .= "\t\t{$extension->properties2['name']} extProps {};\n";
+            $res .= "\t\textProps.sType = $sType;\n";
             $res .= "\t\tVkPhysicalDeviceProperties2 deviceProps2(initDeviceProperties2(&extProps));\n";
             $res .= "\t\tpfnGetPhysicalDeviceProperties2KHR(device, &deviceProps2);\n";    
             // @todo: QVariant vs. QVariant::fromValue
